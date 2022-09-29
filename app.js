@@ -34,7 +34,21 @@ const getWeather = async function () {
 
     let list = document.createElement("li");
 
-    list.innerHTML += `<div class="card" style="width: 18rem;">
+    // citiesEntered = document.querySelectorAll(".card-header");
+    // let cityList = [];
+    // citiesEntered.forEach((element) => {
+    //   cityList.push(element.innerText);
+    // });
+    // let filteredCityList = cityList.filter(
+    //   (i) => (i = cityValue.toUpperCase())
+    // );
+    // if (filteredCityList.length > 0) {
+    //   list.innerText = "YOU HAVE ALREADY ENTERED";
+    //   return;
+    //   form.reset();
+    // }
+
+    list.innerHTML += `<div class="card bg-light" style="width: 18rem;">
       <div class="card-header">
         ${cityValue.toUpperCase()}  
       </div>
