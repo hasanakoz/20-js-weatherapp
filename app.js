@@ -3,6 +3,7 @@ let city = document.querySelector("#city");
 const btn = document.querySelector("#submit");
 const form = document.querySelector("form");
 const weatherCard = document.querySelector(".weather-cart");
+const msg = document.querySelector(".msg");
 
 btn.addEventListener("click", (e) => {
   e.preventDefault();
@@ -32,21 +33,24 @@ const getWeather = async function () {
     } = data;
     const iconUrl = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
 
-    let list = document.createElement("li");
+    citiesEntered = document.querySelectorAll(".card-header");
+    console.log(citiesEntered);
+    let cityList = Array.from(citiesEntered);
+    console.log(cityList);
 
-    // citiesEntered = document.querySelectorAll(".card-header");
-    // let cityList = [];
-    // citiesEntered.forEach((element) => {
-    //   cityList.push(element.innerText);
-    // });
-    // let filteredCityList = cityList.filter(
-    //   (i) => (i = cityValue.toUpperCase())
-    // );
-    // if (filteredCityList.length > 0) {
-    //   list.innerText = "YOU HAVE ALREADY ENTERED";
-    //   return;
-    //   form.reset();
-    // }
+    const filteredCityList = cityList.filter(
+      (i) => i.innerText == cityValue.toUpperCase()
+    );
+    if (filteredCityList.length > 0) {
+      msg.innerText = `YOU HAVE ALREADY ENTERED ${cityValue.toUpperCase()} !!!`;
+
+      form.reset();
+
+      return;
+    }
+    msg.innerHTML = "";
+
+    let list = document.createElement("li");
 
     list.innerHTML += `<div class="card bg-light" style="width: 18rem;">
       <div class="card-header">
@@ -61,8 +65,19 @@ const getWeather = async function () {
       </ul>
       </div>`;
     document.querySelector(".weather-cart ul").prepend(list);
+    if (data.weather[0].icon == "01n") {
+      list
+        .querySelectorAll("li")
+        .forEach((e) => (e.style.backgroundColor = "lightblue"));
+    } else if (data.weather[0].icon == "01d") {
+      list
+        .querySelectorAll("li")
+        .forEach((e) => (e.style.backgroundColor = "yellow"));
+    }
+
     form.reset();
   } catch (error) {
-    weatherCard.innerText = `weather conditions  cannot be fetched`;
+    msg.innerHTML = `weather conditions  cannot be fetched`;
   }
+  form.reset();
 };
